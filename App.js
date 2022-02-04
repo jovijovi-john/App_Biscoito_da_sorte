@@ -1,20 +1,110 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity
+} from "react-native";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>App jovi jovi da sorte</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      textoFrase: "Siga os bons e aprenda com eles.",
+      img: require("./src/biscoito.png")
+    };
+
+    this.abreBiscoito = this.abreBiscoito.bind(this)
+
+    this.frases = [
+      'Siga os bons e aprenda com eles.', 
+      'O bom-senso vale mais do que muito conhecimento.', 
+      'O riso é a menor distância entre duas pessoas.', 
+      'Deixe de lado as preocupações e seja feliz.',
+      'Realize o óbvio, pense no improvável e conquiste o impossível.',
+      'Acredite em milagres, mas não dependa deles.',
+      'A maior barreira para o sucesso é o medo do fracasso.'
+    ]; 
+    
+  }
+
+  abreBiscoito() {
+    let randomNumber = Math.floor(Math.random() * this.frases.length);
+
+    this.setState({
+      textoFrase: this.frases[randomNumber],
+      img: require("./src/biscoitoAberto.png")
+    })
+  }
+
+  render () {
+    return (
+      <View style={styles.container}>
+        
+        <Image
+          source={this.state.img}
+          style={styles.img}
+        />
+
+        <Text style={styles.textoFrase}>"{this.state.textoFrase}"</Text>
+        
+        <TouchableOpacity style={styles.botao} onPress={this.abreBiscoito}>
+
+          <View style={styles.btnArea}>
+            <Text style={styles.btnTexto}>Abrir biscoito!</Text>
+          </View>
+
+        </TouchableOpacity>
+     
+      </View>
+    );
+  };
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center"
   },
-});
+
+  img: {
+    width: 300,
+    height: 300
+  },
+
+  textoFrase: {
+    fontSize: 20,
+    color: "#dd7b22",
+    margin: 30,
+    fontStyle: "italic",
+    textAlign: "center"
+  },
+
+  botao: {
+    width: 230,
+    height: 50,
+    borderWidth: 2,
+    borderColor: "#dd7b22",
+    borderRadius: 25
+  },
+
+  btnArea: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+
+  btnTexto: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#dd7b22"
+  }
+
+
+})
+
+export default App;
